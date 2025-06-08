@@ -52,6 +52,11 @@ export interface Tour {
   active?: boolean;
   season?: string;
   imageUrl?: string;
+  dates?: string[];
+  staffingRequirements?: Array<{
+    role: string;
+    count: number;
+  }>;
 }
 
 export interface Shift {

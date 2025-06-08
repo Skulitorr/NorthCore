@@ -3,7 +3,7 @@ import { useApi } from '../../hooks/useApi';
 import LoadingSpinner from '../common/LoadingSpinner';
 import { Tour } from '../../types';
 import AddTourModal from '../modals/AddTourModal';
-import { MapIcon, EditIcon, PlusIcon, ClockIcon, AlertIcon, CalendarIcon } from '../common/Icons';
+import Icons from '../common/Icons';
 
 interface ToursViewProps {
   onToursChange?: (tours: Tour[]) => void;
@@ -92,13 +92,13 @@ const ToursView: React.FC<ToursViewProps> = ({ onToursChange }) => {
   };
 
   if (loading) {
-    return <LoadingSpinner size={60} message="Loading tours data..." />;
+    return <LoadingSpinner message="Loading tours data..." />;
   }
 
   return (
     <div className="tours-view">
       <div className="tours-header">
-        <h2><MapIcon /> Tours Management</h2>
+        <h2><Icons.MapIcon /> Tours Management</h2>
         <button 
           className="add-tour-button" 
           onClick={() => {
@@ -106,13 +106,13 @@ const ToursView: React.FC<ToursViewProps> = ({ onToursChange }) => {
             setIsAddTourModalOpen(true);
           }}
         >
-          <PlusIcon /> Add New Tour
+          <Icons.PlusIcon /> Add New Tour
         </button>
       </div>
 
       {error && (
         <div className="error-message">
-          <AlertIcon /> {error}
+          <Icons.AlertIcon /> {error}
         </div>
       )}
 
@@ -146,20 +146,20 @@ const ToursView: React.FC<ToursViewProps> = ({ onToursChange }) => {
                       handleTourSelect(tour);
                     }}
                   >
-                    <EditIcon />
+                    <Icons.EditIcon />
                   </button>
                 </div>
               </div>
               <p className="tour-description">{tour.description}</p>
               <div className="tour-details">
                 <div className="tour-detail">
-                  <MapIcon /> {tour.location}
+                  <Icons.MapIcon /> {tour.location}
                 </div>
                 <div className="tour-detail">
-                  <ClockIcon /> {formatDuration(tour.durationMinutes)}
+                  <Icons.ClockIcon /> {formatDuration(tour.durationMinutes)}
                 </div>
                 <div className="tour-detail">
-                  <CalendarIcon /> {tour.frequency}
+                  <Icons.CalendarIcon /> {tour.frequency}
                 </div>
               </div>
               <div className="tour-capacity">

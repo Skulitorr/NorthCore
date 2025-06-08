@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Icons from './Icons';
 
 interface LoadingSpinnerProps {
@@ -33,7 +33,7 @@ const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
         <div className="relative mb-8">
           <div className="animate-spin rounded-full h-20 w-20 border-4 border-blue-200 border-t-blue-600 mx-auto"></div>
           <div className="absolute inset-0 flex items-center justify-center">
-            <Icons.Brain className="w-10 h-10 text-blue-600 animate-pulse" />
+            <Icons.BrainIcon className="w-10 h-10 text-blue-600 animate-pulse" />
           </div>
         </div>
         
