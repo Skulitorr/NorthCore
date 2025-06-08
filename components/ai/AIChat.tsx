@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useApi } from '../../hooks/useApi';
 import { AIMessage } from '../../types';
-import { AIIcon, SendIcon, LoadingIcon } from '../common/Icons';
+import Icons from '../common/Icons';
 
 interface AIChatProps {
   initialMessage?: string;
@@ -88,7 +88,7 @@ const AIChat: React.FC<AIChatProps> = ({
   return (
     <div className="ai-chat-container">
       <div className="chat-header">
-        <AIIcon /> AI Scheduling Assistant
+        <Icons.Brain /> AI Scheduling Assistant
       </div>
       
       <div className="messages-container">
@@ -107,7 +107,7 @@ const AIChat: React.FC<AIChatProps> = ({
         {isLoading && (
           <div className="message assistant-message typing">
             <div className="typing-indicator">
-              <LoadingIcon />
+              <Icons.Clock />
               <span>AI is thinking...</span>
             </div>
           </div>
@@ -130,7 +130,7 @@ const AIChat: React.FC<AIChatProps> = ({
           onClick={handleSendMessage}
           disabled={!inputValue.trim() || isLoading}
         >
-          <SendIcon />
+          <Icons.Send />
         </button>
       </div>
     </div>

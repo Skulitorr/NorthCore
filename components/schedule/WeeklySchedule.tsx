@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useApi } from '../../hooks/useApi';
 import { Schedule, Shift, Staff, Tour } from '../../types';
+import Icons from '../common/Icons';
 import { ClockIcon, UserIcon } from '../common/Icons';
 
 interface WeeklyScheduleProps {
@@ -89,6 +90,14 @@ const WeeklySchedule: React.FC<WeeklyScheduleProps> = ({
 
   return (
     <div className={`weekly-schedule ${className}`}>
+      <div className="schedule-header">
+        <h2><Icons.Clock /> Weekly Schedule</h2>
+        <div className="schedule-actions">
+          <button className="action-button">
+            <Icons.User /> Staff View
+          </button>
+        </div>
+      </div>
       <div className="schedule-grid">
         {days.map((day, index) => {
           const dayStr = day.toISOString().split('T')[0];
