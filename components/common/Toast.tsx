@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X } from './Icons';
+import Icons from './Icons';
 
 interface ToastAction {
   label: string;
@@ -92,7 +92,7 @@ const Toast: React.FC<ToastProps> = ({
             }} 
             className="ml-3 text-white hover:text-gray-200 transition-colors p-1 rounded hover:bg-white hover:bg-opacity-20"
           >
-            <X className="w-4 h-4" />
+            <Icons.X />
           </button>
         </div>
         {autoClose && (
@@ -108,7 +108,7 @@ const Toast: React.FC<ToastProps> = ({
         )}
       </div>
       
-      <style jsx>{`
+      <style>{`
         @keyframes progress {
           to { width: 100%; }
         }
