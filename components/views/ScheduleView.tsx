@@ -120,6 +120,9 @@ const ScheduleView: React.FC<ScheduleViewProps> = ({ date, onDateChange, staff }
     return `${formattedStart} - ${formattedEnd}`;
   };
 
+  return null; // Temporarily comment out the entire return to identify if this is the crashing component
+
+  /* Original return statement:
   return (
     <div className="schedule-view">
       <div className="schedule-header">
@@ -233,6 +236,7 @@ const ScheduleView: React.FC<ScheduleViewProps> = ({ date, onDateChange, staff }
       )}
     </div>
   );
+  */
 };
 
 export default ScheduleView;
