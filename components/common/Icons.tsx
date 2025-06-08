@@ -11,6 +11,7 @@ import {
   Brain
 } from 'lucide-react';
 
+export { X } from 'lucide-react'; // for direct use in Toast.tsx
 export const XIcon = X;
 export const MapIcon = Map;
 export const ChartIcon = BarChart3;
