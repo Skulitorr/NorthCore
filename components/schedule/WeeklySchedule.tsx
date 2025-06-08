@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useApi } from '../../hooks/useApi';
 import { Schedule, Shift, Staff, Tour } from '../../types';
 import Icons from '../common/Icons';
-import { ClockIcon, UserIcon } from '../common/Icons';
 
 interface WeeklyScheduleProps {
   schedule: Schedule;
@@ -123,13 +122,13 @@ const WeeklySchedule: React.FC<WeeklyScheduleProps> = ({
                         onClick={() => onShiftClick && onShiftClick(shift)}
                       >
                         <div className="shift-time">
-                          <ClockIcon /> {formatTime(shift.startTime)} - {formatTime(shift.endTime)}
+                          <Icons.Clock /> {formatTime(shift.startTime)} - {formatTime(shift.endTime)}
                         </div>
                         
                         {showDetails && (
                           <>
                             <div className="shift-staff">
-                              <UserIcon /> {getStaffName(shift.staffId)}
+                              <Icons.User /> {getStaffName(shift.staffId)}
                             </div>
                             {shift.tourId && (
                               <div className="shift-tour">
