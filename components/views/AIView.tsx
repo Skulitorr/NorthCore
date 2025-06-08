@@ -166,7 +166,7 @@ const AIView: React.FC<AIViewProps> = ({ staffCount = 0, tourCount = 0 }) => {
 
       {error && (
         <div className="error-message">
-          <Icons.AlertCircle /> {error}
+          <Icons.Alert /> {error}
         </div>
       )}
 

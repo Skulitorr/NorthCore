@@ -98,7 +98,7 @@ const ToursView: React.FC<ToursViewProps> = ({ onToursChange }) => {
   return (
     <div className="tours-view">
       <div className="tours-header">
-        <h2><Icons.MapIcon /> Tours Management</h2>
+        <h2><Icons.Map /> Tours Management</h2>
         <button 
           className="add-tour-button" 
           onClick={() => {
@@ -106,13 +106,13 @@ const ToursView: React.FC<ToursViewProps> = ({ onToursChange }) => {
             setIsAddTourModalOpen(true);
           }}
         >
-          <Icons.PlusIcon /> Add New Tour
+          <Icons.Plus /> Add New Tour
         </button>
       </div>
 
       {error && (
         <div className="error-message">
-          <Icons.AlertIcon /> {error}
+          <Icons.Alert /> {error}
         </div>
       )}
 
@@ -146,20 +146,20 @@ const ToursView: React.FC<ToursViewProps> = ({ onToursChange }) => {
                       handleTourSelect(tour);
                     }}
                   >
-                    <Icons.EditIcon />
+                    <Icons.Edit />
                   </button>
                 </div>
               </div>
               <p className="tour-description">{tour.description}</p>
               <div className="tour-details">
                 <div className="tour-detail">
-                  <Icons.MapIcon /> {tour.location}
+                  <Icons.Map /> {tour.location}
                 </div>
                 <div className="tour-detail">
-                  <Icons.ClockIcon /> {formatDuration(tour.durationMinutes)}
+                  <Icons.Clock /> {formatDuration(tour.durationMinutes)}
                 </div>
                 <div className="tour-detail">
-                  <Icons.CalendarIcon /> {tour.frequency}
+                  <Icons.Calendar /> {tour.frequency}
                 </div>
               </div>
               <div className="tour-capacity">

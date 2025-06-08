@@ -5,7 +5,7 @@ import BarChart from '../charts/BarChart';
 import LineChart from '../charts/LineChart';
 import DoughnutChart from '../charts/DoughnutChart';
 import { AnalyticsData, StaffWorkload } from '../../types';
-import { ChartIcon, CalendarIcon, AlertIcon, UserIcon } from '../common/Icons';
+import Icons from '../common/Icons';
 
 interface AnalyticsViewProps {
   startDate?: Date;
@@ -51,18 +51,18 @@ const AnalyticsView: React.FC<AnalyticsViewProps> = ({
   };
 
   if (loading) {
-    return <LoadingSpinner size={60} message="Loading analytics data..." />;
+    return <LoadingSpinner message="Loading analytics data..." />;
   }
 
   if (!analyticsData) {
     return (
       <div className="analytics-view">
         <div className="analytics-header">
-          <h2><ChartIcon /> Analytics Dashboard</h2>
+          <h2><Icons.Chart /> Analytics Dashboard</h2>
         </div>
         {error ? (
           <div className="error-message">
-            <AlertIcon /> {error}
+            <Icons.Alert /> {error}
           </div>
         ) : (
           <div className="empty-analytics">
@@ -157,7 +157,7 @@ const AnalyticsView: React.FC<AnalyticsViewProps> = ({
   return (
     <div className="analytics-view">
       <div className="analytics-header">
-        <h2><ChartIcon /> Analytics Dashboard</h2>
+        <h2><Icons.Chart /> Analytics Dashboard</h2>
         <div className="date-range-selector">
           <button 
             className={`range-button ${dateRange.end.getTime() - dateRange.start.getTime() === 7 * 24 * 60 * 60 * 1000 ? 'active' : ''}`}
@@ -182,7 +182,7 @@ const AnalyticsView: React.FC<AnalyticsViewProps> = ({
 
       {error && (
         <div className="error-message">
-          <AlertIcon /> {error}
+          <Icons.Alert /> {error}
         </div>
       )}
 
@@ -210,41 +210,36 @@ const AnalyticsView: React.FC<AnalyticsViewProps> = ({
 
       <div className="analytics-charts">
         <div className="chart-container">
-          <h3><CalendarIcon /> Booking Trends</h3>
+          <h3><Icons.Calendar /> Booking Trends</h3>
           <LineChart 
             data={bookingTrendsData} 
-            width={500}
-            height={300}
+            title="Booking Trends"
           />
         </div>
         
         <div className="chart-container">
-          <h3><ChartIcon /> Tour Popularity</h3>
+          <h3><Icons.Chart /> Tour Popularity</h3>
           <BarChart 
             data={tourPopularityData} 
-            width={500}
-            height={300}
-            options={{
-              indexAxis: 'y',
-            }}
+            title="Tour Popularity"
           />
         </div>
         
         <div className="chart-container">
-          <h3><UserIcon /> Staff Distribution</h3>
+          <h3><Icons.User /> Staff Distribution</h3>
           <DoughnutChart 
             data={staffDistributionData}
+            title="Staff Distribution"
             width={400}
             height={400}
           />
         </div>
         
         <div className="chart-container">
-          <h3><ChartIcon /> Workload by Role</h3>
+          <h3><Icons.Chart /> Workload by Role</h3>
           <BarChart 
             data={workloadData}
-            width={500}
-            height={300}
+            title="Workload by Role"
           />
         </div>
       </div>

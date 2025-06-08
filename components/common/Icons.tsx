@@ -8,32 +8,34 @@ import {
   User,
   Plus,
   Edit,
-  Brain
+  Brain,
+  Send,
+  Search,
+  Check,
+  Trash,
+  Settings,
+  Star,
+  UserPlus
 } from 'lucide-react';
 
-export { X } from 'lucide-react'; // for direct use in Toast.tsx
-export const XIcon = X;
-export const MapIcon = Map;
-export const ChartIcon = BarChart3;
-export const CalendarIcon = Calendar;
-export const AlertIcon = AlertTriangle;
-export const ClockIcon = Clock;
-export const UserIcon = User;
-export const PlusIcon = Plus;
-export const EditIcon = Edit;
-export const BrainIcon = Brain;
-
 const Icons = {
-  XIcon,
-  MapIcon,
-  ChartIcon,
-  CalendarIcon,
-  AlertIcon,
-  ClockIcon,
-  UserIcon,
-  PlusIcon,
-  EditIcon,
-  BrainIcon,
+  X,
+  Map,
+  Chart: BarChart3,
+  Calendar,
+  Alert: AlertTriangle,
+  Clock,
+  User,
+  Plus,
+  Edit,
+  Brain,
+  Send,
+  Search,
+  Check,
+  Trash,
+  Settings,
+  Star,
+  UserPlus
 };
 
 export default Icons; 
