@@ -4,7 +4,7 @@ import LoadingSpinner from '../common/LoadingSpinner';
 import { Schedule, Shift, Staff } from '../../types';
 import ShiftModal from '../modals/ShiftModal';
 import ReplacementModal from '../modals/ReplacementModal';
-import { CalendarIcon, EditIcon, UserIcon, AlertIcon } from '../common/Icons';
+import Icons from '../common/Icons';
 
 interface ScheduleViewProps {
   date: Date;
@@ -16,9 +16,9 @@ const ScheduleView: React.FC<ScheduleViewProps> = ({ date, onDateChange, staff }
   const { fetchSchedule, updateShift, deleteShift } = useApi();
   const [schedule, setSchedule] = useState<Schedule | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [selectedShift, setSelectedShift] = useState<Shift | null>(null);
+  const [selectedShift, setSelectedShift] = useState<Shift | undefined>(undefined);
   const [isShiftModalOpen, setIsShiftModalOpen] = useState<boolean>(false);
-  const [isReplacementModalOpen, setIsReplacementModalOpen] = useState<boolean>(false);
+  const [showReplacementModal, setShowReplacementModal] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -58,7 +58,7 @@ const ScheduleView: React.FC<ScheduleViewProps> = ({ date, onDateChange, staff }
   const handleFindReplacement = (shift: Shift) => {
     setSelectedShift(shift);
     setIsShiftModalOpen(false);
-    setIsReplacementModalOpen(true);
+    setShowReplacementModal(true);
   };
 
   const handleShiftUpdate = async (updatedShift: Shift) => {
@@ -83,24 +83,25 @@ const ScheduleView: React.FC<ScheduleViewProps> = ({ date, onDateChange, staff }
     }
   };
 
-  const handleReplacementConfirm = async (originalShiftId: string, newStaffId: string) => {
+  const handleReplacementConfirm = async (shift: Shift, replacementStaff: Staff) => {
     try {
-      const updatedShift = { 
-        ...selectedShift!, 
-        staffId: newStaffId,
-        lastModified: new Date().toISOString()
+      const updatedShift: Shift = {
+        ...shift,
+        staffId: replacementStaff.id,
+        staffName: replacementStaff.name,
+        updatedAt: new Date().toISOString()
       };
+      
       await updateShift(updatedShift);
       loadSchedule();
-      setIsReplacementModalOpen(false);
+      setShowReplacementModal(false);
     } catch (err) {
       setError('Failed to assign replacement. Please try again.');
-      console.error(err);
     }
   };
 
   if (loading) {
-    return <LoadingSpinner size={60} message="Loading schedule..." />;
+    return <LoadingSpinner message="Loading schedule..." />;
   }
 
   const formatDateRange = () => {
@@ -122,7 +123,7 @@ const ScheduleView: React.FC<ScheduleViewProps> = ({ date, onDateChange, staff }
   return (
     <div className="schedule-view">
       <div className="schedule-header">
-        <h2><CalendarIcon /> Weekly Schedule</h2>
+        <h2><Icons.Calendar /> Schedule</h2>
         <div className="date-navigation">
           <button onClick={handlePreviousWeek} className="nav-button">
             &lt; Previous
@@ -132,11 +133,19 @@ const ScheduleView: React.FC<ScheduleViewProps> = ({ date, onDateChange, staff }
             Next &gt;
           </button>
         </div>
+        <div className="schedule-actions">
+          <button className="action-button">
+            <Icons.Edit /> Edit Schedule
+          </button>
+          <button className="action-button">
+            <Icons.User /> Staff View
+          </button>
+        </div>
       </div>
 
       {error && (
         <div className="error-message">
-          <AlertIcon /> {error}
+          <Icons.Alert /> {error}
         </div>
       )}
 
@@ -168,7 +177,7 @@ const ScheduleView: React.FC<ScheduleViewProps> = ({ date, onDateChange, staff }
                         >
                           <div className="shift-time">{formattedStart} - {formattedEnd}</div>
                           <div className="shift-staff">
-                            <UserIcon /> {staffMember ? staffMember.name : 'Unassigned'}
+                            <Icons.User /> {staffMember ? staffMember.name : 'Unassigned'}
                           </div>
                           <div className="shift-tour">{shift.tourName || 'General Shift'}</div>
                           <div className="shift-actions">
@@ -179,7 +188,7 @@ const ScheduleView: React.FC<ScheduleViewProps> = ({ date, onDateChange, staff }
                                 handleShiftClick(shift);
                               }}
                             >
-                              <EditIcon />
+                              <Icons.Edit />
                             </button>
                           </div>
                         </div>
@@ -193,7 +202,7 @@ const ScheduleView: React.FC<ScheduleViewProps> = ({ date, onDateChange, staff }
           <div className="empty-schedule">
             <p>No shifts scheduled for this week.</p>
             <button className="add-shift-button" onClick={() => {
-              setSelectedShift(null);
+              setSelectedShift(undefined);
               setIsShiftModalOpen(true);
             }}>
               Add New Shift
@@ -204,6 +213,7 @@ const ScheduleView: React.FC<ScheduleViewProps> = ({ date, onDateChange, staff }
 
       {isShiftModalOpen && (
         <ShiftModal
+          isOpen={isShiftModalOpen}
           shift={selectedShift}
           staff={staff}
           onClose={() => setIsShiftModalOpen(false)}
@@ -213,12 +223,12 @@ const ScheduleView: React.FC<ScheduleViewProps> = ({ date, onDateChange, staff }
         />
       )}
 
-      {isReplacementModalOpen && selectedShift && (
+      {showReplacementModal && selectedShift && (
         <ReplacementModal
+          isOpen={showReplacementModal}
           shift={selectedShift}
-          staff={staff}
-          onClose={() => setIsReplacementModalOpen(false)}
-          onConfirm={handleReplacementConfirm}
+          onClose={() => setShowReplacementModal(false)}
+          onReplacementConfirmed={handleReplacementConfirm}
         />
       )}
     </div>
