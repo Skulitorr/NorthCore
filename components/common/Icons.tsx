@@ -1,10 +1,14 @@
 import { FaCalendarAlt, FaEdit, FaUser, FaExclamationTriangle } from 'react-icons/fa';
+import { Map, Plus, Clock } from 'lucide-react';
 import React from 'react';
 
 export const CalendarIcon = FaCalendarAlt;
 export const EditIcon = FaEdit;
 export const UserIcon = FaUser;
 export const AlertIcon = FaExclamationTriangle;
+export const MapIcon = Map;
+export const PlusIcon = Plus;
+export const ClockIcon = Clock;
 
 export const X = (props: React.SVGProps<SVGSVGElement>) => (
   <svg {...props} viewBox="0 0 24 24" fill="none" stroke="currentColor">
@@ -27,6 +31,9 @@ const Icons = {
   CalendarIcon,
   EditIcon,
   UserIcon,
+  MapIcon,
+  PlusIcon,
+  ClockIcon,
 };
 
 export default Icons; 
