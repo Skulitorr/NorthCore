@@ -5,8 +5,10 @@ interface SafeImportOptions {
   componentName: string;
 }
 
+type ModuleType<T> = { default: T } | { [key: string]: T };
+
 export const safeImport = <T extends React.ComponentType<any>>(
-  importFn: () => Promise<{ default: T } | { [key: string]: T }>,
+  importFn: () => Promise<ModuleType<T>>,
   options: SafeImportOptions
 ): React.LazyExoticComponent<T> => {
   const { fallback, componentName } = options;
@@ -27,6 +29,12 @@ export const safeImport = <T extends React.ComponentType<any>>(
         
         if (!Component) {
           console.error(`Failed to import ${componentName}: No valid export found. Available exports:`, Object.keys(module));
+          return { default: () => fallback || <div>Failed to load {componentName}</div> };
+        }
+
+        // Verify that the component is a valid React component
+        if (typeof Component !== 'function' && typeof Component !== 'object') {
+          console.error(`Failed to import ${componentName}: Invalid component type:`, typeof Component);
           return { default: () => fallback || <div>Failed to load {componentName}</div> };
         }
 

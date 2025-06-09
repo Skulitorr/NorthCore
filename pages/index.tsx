@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import ErrorBoundary from '../components/common/ErrorBoundary';
-import Header from '../components/layout/Header';
+import Header from '../components/common/Header';
 import ScheduleView from '../components/views/ScheduleView';
 import StaffView from '../components/views/StaffView';
 import ToursView from '../components/views/ToursView';
