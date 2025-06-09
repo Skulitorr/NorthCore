@@ -1,55 +1,48 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ErrorBoundary from '../common/ErrorBoundary';
 import { Staff, Tour } from '../../types';
 
 // Safe imports with fallbacks
-let Header: any;
-try {
-  Header = require('../common/Header').default;
-} catch (err) {
-  console.error("Failed to import Header:", err);
-  Header = () => <div>Header not available</div>;
-}
+let Header: any = () => <div>Header not available</div>;
+let ScheduleView: any = () => <div>Schedule view not available</div>;
+let StaffView: any = () => <div>Staff view not available</div>;
+let ToursView: any = () => <div>Tours view not available</div>;
+let AnalyticsView: any = () => <div>Analytics view not available</div>;
+let AIView: any = () => <div>AI view not available</div>;
 
-let ScheduleView: any;
-try {
-  ScheduleView = require('../views/ScheduleView').default;
-} catch (err) {
-  console.error("Failed to import ScheduleView:", err);
-  ScheduleView = () => <div>Schedule view not available</div>;
-}
+// Load components dynamically
+useEffect(() => {
+  const loadComponents = async () => {
+    try {
+      const [
+        HeaderModule,
+        ScheduleViewModule,
+        StaffViewModule,
+        ToursViewModule,
+        AnalyticsViewModule,
+        AIViewModule
+      ] = await Promise.all([
+        import('../common/Header'),
+        import('../views/ScheduleView'),
+        import('../views/StaffView'),
+        import('../views/ToursView'),
+        import('../views/AnalyticsView'),
+        import('../views/AIView')
+      ]);
 
-let StaffView: any;
-try {
-  StaffView = require('../views/StaffView').default;
-} catch (err) {
-  console.error("Failed to import StaffView:", err);
-  StaffView = () => <div>Staff view not available</div>;
-}
+      Header = HeaderModule.default;
+      ScheduleView = ScheduleViewModule.default;
+      StaffView = StaffViewModule.default;
+      ToursView = ToursViewModule.default;
+      AnalyticsView = AnalyticsViewModule.default;
+      AIView = AIViewModule.default;
+    } catch (err) {
+      console.error('Failed to load components:', err);
+    }
+  };
 
-let ToursView: any;
-try {
-  ToursView = require('../views/ToursView').default;
-} catch (err) {
-  console.error("Failed to import ToursView:", err);
-  ToursView = () => <div>Tours view not available</div>;
-}
-
-let AnalyticsView: any;
-try {
-  AnalyticsView = require('../views/AnalyticsView').default;
-} catch (err) {
-  console.error("Failed to import AnalyticsView:", err);
-  AnalyticsView = () => <div>Analytics view not available</div>;
-}
-
-let AIView: any;
-try {
-  AIView = require('../views/AIView').default;
-} catch (err) {
-  console.error("Failed to import AIView:", err);
-  AIView = () => <div>AI view not available</div>;
-}
+  loadComponents();
+}, []);
 
 type View = 'schedule' | 'staff' | 'tours' | 'analytics' | 'ai';
 
