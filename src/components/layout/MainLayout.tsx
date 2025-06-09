@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Suspense } from 'react';
+import React, { useState, Suspense } from 'react';
 import ErrorBoundary from '../common/ErrorBoundary';
 import { Staff, Tour } from '../../types';
 import { safeImport } from '../../utils/safeImport';
@@ -33,35 +33,53 @@ interface ToursViewProps {
   onToursChange: (tours: Tour[]) => void;
 }
 
-// Safe dynamic imports
+// Safe dynamic imports with fallbacks
 const Header = safeImport<React.ComponentType<HeaderProps>>(
   () => import('../common/Header'),
-  { componentName: 'Header' }
+  { 
+    componentName: 'Header',
+    fallback: <FallbackComponent name="Header" />
+  }
 );
 
 const ScheduleView = safeImport<React.ComponentType<ScheduleViewProps>>(
   () => import('../views/ScheduleView'),
-  { componentName: 'ScheduleView' }
+  { 
+    componentName: 'ScheduleView',
+    fallback: <FallbackComponent name="ScheduleView" />
+  }
 );
 
 const StaffView = safeImport<React.ComponentType<StaffViewProps>>(
   () => import('../views/StaffView'),
-  { componentName: 'StaffView' }
+  { 
+    componentName: 'StaffView',
+    fallback: <FallbackComponent name="StaffView" />
+  }
 );
 
 const ToursView = safeImport<React.ComponentType<ToursViewProps>>(
   () => import('../views/ToursView'),
-  { componentName: 'ToursView' }
+  { 
+    componentName: 'ToursView',
+    fallback: <FallbackComponent name="ToursView" />
+  }
 );
 
 const AnalyticsView = safeImport<React.ComponentType>(
   () => import('../views/AnalyticsView'),
-  { componentName: 'AnalyticsView' }
+  { 
+    componentName: 'AnalyticsView',
+    fallback: <FallbackComponent name="AnalyticsView" />
+  }
 );
 
 const AIView = safeImport<React.ComponentType>(
   () => import('../views/AIView'),
-  { componentName: 'AIView' }
+  { 
+    componentName: 'AIView',
+    fallback: <FallbackComponent name="AIView" />
+  }
 );
 
 const MainLayout: React.FC = () => {
