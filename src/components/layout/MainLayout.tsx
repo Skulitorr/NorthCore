@@ -8,6 +8,13 @@ import ToursView from '../views/ToursView';
 import AnalyticsView from '../views/AnalyticsView';
 import AIView from '../views/AIView';
 
+console.log('Header:', Header);
+console.log('ScheduleView:', ScheduleView);
+console.log('StaffView:', StaffView);
+console.log('ToursView:', ToursView);
+console.log('AnalyticsView:', AnalyticsView);
+console.log('AIView:', AIView);
+
 // Default fallback components
 const FallbackComponent = ({ name }: { name: string }) => (
   <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-md">

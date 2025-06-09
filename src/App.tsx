@@ -8,6 +8,13 @@ import AnalyticsView from './components/views/AnalyticsView';
 import AIView from './components/views/AIView';
 import { Staff } from './types';
 
+console.log('Header:', Header);
+console.log('ScheduleView:', ScheduleView);
+console.log('StaffView:', StaffView);
+console.log('ToursView:', ToursView);
+console.log('AnalyticsView:', AnalyticsView);
+console.log('AIView:', AIView);
+
 // Sanity check component
 const SanityCheck: React.FC = () => {
   const [staff, setStaff] = React.useState<Staff[]>([]);
