@@ -1,12 +1,55 @@
 import React, { useState } from 'react';
 import ErrorBoundary from '../common/ErrorBoundary';
-import Header from '../common/Header';
-import ScheduleView from '../views/ScheduleView';
-import StaffView from '../views/StaffView';
-import ToursView from '../views/ToursView';
-import AnalyticsView from '../views/AnalyticsView';
-import AIView from '../views/AIView';
 import { Staff, Tour } from '../../types';
+
+// Safe imports with fallbacks
+let Header: any;
+try {
+  Header = require('../common/Header').default;
+} catch (err) {
+  console.error("Failed to import Header:", err);
+  Header = () => <div>Header not available</div>;
+}
+
+let ScheduleView: any;
+try {
+  ScheduleView = require('../views/ScheduleView').default;
+} catch (err) {
+  console.error("Failed to import ScheduleView:", err);
+  ScheduleView = () => <div>Schedule view not available</div>;
+}
+
+let StaffView: any;
+try {
+  StaffView = require('../views/StaffView').default;
+} catch (err) {
+  console.error("Failed to import StaffView:", err);
+  StaffView = () => <div>Staff view not available</div>;
+}
+
+let ToursView: any;
+try {
+  ToursView = require('../views/ToursView').default;
+} catch (err) {
+  console.error("Failed to import ToursView:", err);
+  ToursView = () => <div>Tours view not available</div>;
+}
+
+let AnalyticsView: any;
+try {
+  AnalyticsView = require('../views/AnalyticsView').default;
+} catch (err) {
+  console.error("Failed to import AnalyticsView:", err);
+  AnalyticsView = () => <div>Analytics view not available</div>;
+}
+
+let AIView: any;
+try {
+  AIView = require('../views/AIView').default;
+} catch (err) {
+  console.error("Failed to import AIView:", err);
+  AIView = () => <div>AI view not available</div>;
+}
 
 type View = 'schedule' | 'staff' | 'tours' | 'analytics' | 'ai';
 
