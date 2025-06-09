@@ -427,36 +427,109 @@ const VaktAI: React.FC = () => {
   return (
     <ErrorBoundary>
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-        <Header 
-          user={userProfile}
-          notificationsCount={unreadNotificationsCount}
-          onNotificationsClick={() => setModals(prev => ({ ...prev, notifications: true }))}
+        {/* <Header 
+          currentView={currentView}
+          onViewChange={setCurrentView}
+          onSearch={setSearchQuery}
           onSettingsClick={() => setModals(prev => ({ ...prev, settings: true }))}
-        />
+          onNotificationsClick={() => setModals(prev => ({ ...prev, notifications: true }))}
+          unreadNotificationsCount={unreadNotificationsCount}
+          userProfile={userProfile}
+        /> */}
 
         <div className="bg-white shadow-md sticky top-0 z-40 no-print">
-          <div className="container mx-auto px-4">
-            <div className="flex space-x-1">
-              {[
-                { id: 'schedule' as const, label: 'Vaktaplan', icon: Icons.Calendar },
-                { id: 'staff' as const, label: 'Starfsfólk', icon: Icons.Users },
-                { id: 'tours' as const, label: 'Ferðir', icon: Icons.Map },
-                { id: 'analytics' as const, label: 'Tölfræði', icon: Icons.BarChart },
-                { id: 'ai' as const, label: 'AI Aðstoð', icon: Icons.Brain }
-              ].map(tab => (
-                <button
-                  key={tab.id}
-                  onClick={() => setCurrentView(tab.id)}
-                  className={`flex items-center space-x-2 px-6 py-4 font-medium transition-all border-b-4 ${
-                    currentView === tab.id
-                      ? 'text-blue-600 border-blue-600 bg-blue-50'
-                      : 'text-gray-600 border-transparent hover:text-gray-900 hover:bg-gray-50'
-                  }`}
-                >
-                  <tab.icon className="w-5 h-5" />
-                  <span>{tab.label}</span>
-                </button>
-              ))}
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex justify-between h-16">
+              <div className="flex">
+                <div className="flex-shrink-0 flex items-center">
+                  <Icons.Map className="h-8 w-8 text-indigo-600" />
+                </div>
+                <nav className="hidden sm:ml-6 sm:flex sm:space-x-8">
+                  <button
+                    onClick={() => setCurrentView('schedule')}
+                    className={`${
+                      currentView === 'schedule'
+                        ? 'border-indigo-500 text-gray-900'
+                        : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                    } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
+                  >
+                    <Icons.Calendar className="h-5 w-5 mr-2" />
+                    Vaktir
+                  </button>
+                  <button
+                    onClick={() => setCurrentView('staff')}
+                    className={`${
+                      currentView === 'staff'
+                        ? 'border-indigo-500 text-gray-900'
+                        : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                    } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
+                  >
+                    <Icons.User className="h-5 w-5 mr-2" />
+                    Starfsmenn
+                  </button>
+                  <button
+                    onClick={() => setCurrentView('tours')}
+                    className={`${
+                      currentView === 'tours'
+                        ? 'border-indigo-500 text-gray-900'
+                        : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                    } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
+                  >
+                    <Icons.Map className="h-5 w-5 mr-2" />
+                    Ferðir
+                  </button>
+                  <button
+                    onClick={() => setCurrentView('analytics')}
+                    className={`${
+                      currentView === 'analytics'
+                        ? 'border-indigo-500 text-gray-900'
+                        : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                    } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
+                  >
+                    <Icons.Chart className="h-5 w-5 mr-2" />
+                    Greining
+                  </button>
+                  <button
+                    onClick={() => setCurrentView('ai')}
+                    className={`${
+                      currentView === 'ai'
+                        ? 'border-indigo-500 text-gray-900'
+                        : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                    } inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium`}
+                  >
+                    <Icons.Brain className="h-5 w-5 mr-2" />
+                    AI
+                  </button>
+                </nav>
+                <div className="flex items-center space-x-4">
+                  <button
+                    onClick={() => setModals(prev => ({ ...prev, notifications: true }))}
+                    className="relative p-2 text-gray-600 hover:text-gray-900"
+                  >
+                    <Icons.Bell className="h-6 w-6" />
+                    {unreadNotificationsCount > 0 && (
+                      <span className="absolute top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-white transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
+                        {unreadNotificationsCount}
+                      </span>
+                    )}
+                  </button>
+                  <button
+                    onClick={() => setModals(prev => ({ ...prev, settings: true }))}
+                    className="p-2 text-gray-600 hover:text-gray-900"
+                  >
+                    <Icons.Settings className="h-6 w-6" />
+                  </button>
+                  <div className="relative">
+                    <button
+                      onClick={() => setModals(prev => ({ ...prev, profile: true }))}
+                      className="flex items-center space-x-2 p-2 text-gray-600 hover:text-gray-900"
+                    >
+                      <Icons.User className="h-6 w-6" />
+                      <span className="text-sm font-medium">{userProfile?.name || 'Notandi'}</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -516,173 +589,158 @@ const VaktAI: React.FC = () => {
             </div>
           </div>
 
-          {currentView === 'schedule' && (
-            <ScheduleView
+          {/* {currentView === 'schedule' && (
+            <ScheduleView 
               date={currentDate}
               onDateChange={handleDateChange}
-              staff={filteredStaff}
+              staff={staff}
             />
-          )}
+          )} */}
 
-          {currentView === 'staff' && (
-            <StaffView
-              staff={filteredStaff}
+          {/* {currentView === 'staff' && (
+            <StaffView 
+              staff={staff}
               onStaffChange={handleStaffChange}
+              onAddStaff={() => setModals(prev => ({ ...prev, addStaff: true }))}
+              onStaffClick={(staff) => setModals(prev => ({ ...prev, staffDetails: staff }))}
+              onReportSick={(staff) => setModals(prev => ({ ...prev, sickCall: staff }))}
             />
-          )}
+          )} */}
 
-          {currentView === 'tours' && (
-            <ToursView
+          {/* {currentView === 'tours' && (
+            <ToursView 
+              tours={tours}
               onToursChange={handleToursChange}
+              onAddTour={() => setModals(prev => ({ ...prev, addTour: true }))}
             />
-          )}
+          )} */}
 
-          {currentView === 'analytics' && (
-            <AnalyticsView
-              startDate={new Date(new Date().setDate(new Date().getDate() - 30))}
-              endDate={new Date()}
+          {/* {currentView === 'analytics' && (
+            <AnalyticsView 
+              data={analytics}
+              staff={staff}
+              tours={tours}
             />
-          )}
+          )} */}
 
-          {currentView === 'ai' && (
-            <AIView
+          {/* {currentView === 'ai' && (
+            <AIView 
               staffCount={staff.length}
               tourCount={tours.length}
             />
-          )}
+          )} */}
         </main>
 
+        {/* <Footer /> */}
+
         {/* Modals */}
-        {modals.settings && (
-          <SettingsModal
+        {/* {modals.settings && (
+          <SettingsModal 
             isOpen={modals.settings}
             onClose={() => setModals(prev => ({ ...prev, settings: false }))}
             userProfile={userProfile}
+            onProfileUpdate={setUserProfile}
           />
-        )}
-        
-        {modals.notifications && (
-          <NotificationsModal
+        )} */}
+
+        {/* {modals.notifications && (
+          <NotificationsModal 
             isOpen={modals.notifications}
-            notifications={notifications}
             onClose={() => setModals(prev => ({ ...prev, notifications: false }))}
+            notifications={notifications}
+            onNotificationRead={(id) => {
+              setNotifications(prev => prev.map(n => 
+                n.id === id ? { ...n, read: true } : n
+              ));
+            }}
           />
-        )}
-        
-        {modals.addStaff && (
-          <AddStaffModal
+        )} */}
+
+        {/* {modals.addStaff && (
+          <AddStaffModal 
             isOpen={modals.addStaff}
             onClose={() => setModals(prev => ({ ...prev, addStaff: false }))}
-            onStaffAdded={handleAddStaff}
+            onAdd={handleAddStaff}
           />
-        )}
-        
-        {modals.addTour && (
-          <AddTourModal
+        )} */}
+
+        {/* {modals.addTour && (
+          <AddTourModal 
             isOpen={modals.addTour}
             onClose={() => setModals(prev => ({ ...prev, addTour: false }))}
-            onTourAdded={handleAddTour}
+            onAdd={handleAddTour}
           />
-        )}
-        
-        {modals.staffDetails && (
-          <StaffDetailsModal
+        )} */}
+
+        {/* {modals.staffDetails && (
+          <StaffDetailsModal 
             isOpen={!!modals.staffDetails}
             staff={modals.staffDetails}
             onClose={() => setModals(prev => ({ ...prev, staffDetails: null }))}
-            onStaffUpdated={(staff) => {
-              setStaff(prev => prev.map(s => s.id === staff.id ? staff : s));
-              setModals(prev => ({ ...prev, staffDetails: null }));
-              addToast({
-                id: `staff-edit-${Date.now()}`,
-                message: 'Upplýsingar uppfærðar',
-                type: 'success',
-                duration: 3000
-              });
-            }}
-            onDelete={(staffId) => {
-              setStaff(prev => prev.filter(s => s.id !== staffId));
-              setModals(prev => ({ ...prev, staffDetails: null }));
-              addToast({
-                id: `staff-delete-${Date.now()}`,
-                message: 'Starfsmaður hefur verið fjarlægður',
-                type: 'info',
-                duration: 3000
-              });
-            }}
+            onUpdate={handleStaffChange}
           />
-        )}
-        
-        {modals.editShift && (
-          <ShiftModal
+        )} */}
+
+        {/* {modals.editShift && (
+          <ShiftModal 
             isOpen={!!modals.editShift}
             shift={modals.editShift}
             staff={staff}
             onClose={() => setModals(prev => ({ ...prev, editShift: null }))}
             onSave={handleEditShift}
+            onDelete={handleDeleteShift}
           />
-        )}
-        
-        {modals.addShift && (
-          <ShiftModal
+        )} */}
+
+        {/* {modals.sickCall && (
+          <SickCallModal 
+            isOpen={!!modals.sickCall}
+            staff={modals.sickCall}
+            onClose={() => setModals(prev => ({ ...prev, sickCall: null }))}
+            onConfirm={handleReportSick}
+          />
+        )} */}
+
+        {/* {modals.replacement && (
+          <ReplacementModal 
+            isOpen={!!modals.replacement}
+            staff={modals.replacement}
+            onClose={() => setModals(prev => ({ ...prev, replacement: null }))}
+            onConfirm={handleFindReplacement}
+          />
+        )} */}
+
+        {/* {modals.addShift && (
+          <ShiftModal 
             isOpen={!!modals.addShift}
-            staffMember={modals.addShift.staff}
+            staff={modals.addShift.staff}
             day={modals.addShift.day}
-            staff={staff}
             onClose={() => setModals(prev => ({ ...prev, addShift: null }))}
             onSave={handleAddShift}
           />
-        )}
-        
-        {modals.replacement && (
-          <ReplacementModal
-            isOpen={!!modals.replacement}
-            shift={shifts.find(s => s.staffId === modals.replacement?.id) || {
-              id: '',
-              staffId: modals.replacement.id,
-              staffName: modals.replacement.name,
-              startTime: new Date().toISOString(),
-              endTime: new Date().toISOString(),
-              type: 'regular',
-              status: 'scheduled',
-              createdAt: new Date().toISOString()
-            }}
-            onClose={() => setModals(prev => ({ ...prev, replacement: null }))}
-            onReplacementConfirmed={(updatedShift, replacementStaff) => {
-              setShifts(prev => prev.map(s => s.id === updatedShift.id ? updatedShift : s));
-              setStaff(prev => prev.map(s => s.id === modals.replacement?.id ? { ...s, sick: false } : s));
-              addToast({
-                id: `replacement-${Date.now()}`,
-                message: `${replacementStaff.name} hefur verið valinn sem staðgengill`,
-                type: 'success',
-                duration: 3000
-              });
-              setModals(prev => ({ ...prev, replacement: null }));
-            }}
-          />
-        )}
-        
-        {/* Loading Spinner */}
-        <LoadingSpinner
-          isVisible={loadingState.isLoading}
-          message={loadingState.message}
-          progress={loadingState.progress}
-        />
-        
-        {/* Toast Notifications */}
-        <div className="fixed bottom-4 right-4 z-50 space-y-2">
+        )} */}
+
+        {/* Toasts */}
+        <div className="toast-container">
           {toasts.map(toast => (
             <Toast
               key={toast.id}
               message={toast.message}
               type={toast.type}
               onClose={() => removeToast(toast.id)}
-              actions={toast.actions}
+              autoClose={!!toast.duration}
+              duration={toast.duration}
             />
           ))}
         </div>
-        
-        <Footer />
+
+        {/* Loading Spinner */}
+        {loadingState.isLoading && (
+          <LoadingSpinner 
+            message={loadingState.message}
+            progress={loadingState.progress}
+          />
+        )}
       </div>
       
       <style>{`

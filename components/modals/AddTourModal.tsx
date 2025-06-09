@@ -217,11 +217,11 @@ const AddTourModal: React.FC<AddTourModalProps> = ({ tour, onClose, onSave, onDe
       <div className="bg-white rounded-2xl max-w-3xl w-full mx-4 max-h-[90vh] overflow-hidden shadow-2xl transform animate-scaleIn" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between p-6 border-b bg-gradient-to-r from-blue-50 to-indigo-50">
           <h3 className="text-2xl font-bold text-gray-900 flex items-center">
-            <Icons.MapIcon className="w-7 h-7 mr-3 text-blue-600" />
+            <Icons.Map className="w-7 h-7 mr-3 text-blue-600" />
             Bæta við ferð
           </h3>
           <button onClick={onClose} className="text-gray-500 hover:text-gray-700 p-2 rounded-lg hover:bg-gray-100 transition-all">
-            <Icons.XIcon className="w-6 h-6" />
+            <Icons.X className="w-6 h-6" />
           </button>
         </div>
 

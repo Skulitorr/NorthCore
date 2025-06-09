@@ -99,7 +99,7 @@ const StaffView: React.FC<StaffViewProps> = ({ staff, onStaffChange }) => {
   if (error) {
     return (
       <div className="text-red-600 p-4 bg-red-50 rounded-lg">
-        <Icons.AlertTriangle className="w-6 h-6 inline-block mr-2" />
+        <Icons.Alert className="w-6 h-6 inline-block mr-2" />
         {error}
       </div>
     );

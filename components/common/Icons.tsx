@@ -15,7 +15,10 @@ import {
   Trash,
   Settings,
   Star,
-  UserPlus
+  UserPlus,
+  Bell,
+  Home,
+  Download
 } from 'lucide-react';
 
 const Icons = {
@@ -35,7 +38,10 @@ const Icons = {
   Trash,
   Settings,
   Star,
-  UserPlus
+  UserPlus,
+  Bell,
+  Home,
+  Download
 };
 
 export default Icons; 
