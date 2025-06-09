@@ -6,7 +6,7 @@ import StaffView from './components/views/StaffView';
 import ToursView from './components/views/ToursView';
 import AnalyticsView from './components/views/AnalyticsView';
 import AIView from './components/views/AIView';
-import { Staff } from './types';
+import { Staff } from './types/index';
 
 console.log('Header:', Header);
 console.log('ScheduleView:', ScheduleView);

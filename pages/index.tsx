@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import ErrorBoundary from '../components/common/ErrorBoundary';
-import Header from '../components/common/Header';
-import ScheduleView from '../components/views/ScheduleView';
-import StaffView from '../components/views/StaffView';
-import ToursView from '../components/views/ToursView';
-import AnalyticsView from '../components/views/AnalyticsView';
-import AIView from '../components/views/AIView';
-import Icons from '../components/common/Icons';
-import { Staff, Tour } from '../types';
+import ErrorBoundary from '@components/common/ErrorBoundary';
+import Header from '@components/common/Header';
+import ScheduleView from '@components/views/ScheduleView';
+import StaffView from '@components/views/StaffView';
+import ToursView from '@components/views/ToursView';
+import AnalyticsView from '@components/views/AnalyticsView';
+import AIView from '@components/views/AIView';
+import Icons from '@components/common/Icons';
+import { Staff, Tour } from '@types';
 
 const VaktAI: React.FC = () => {
   const [currentView, setCurrentView] = useState<'schedule' | 'staff' | 'tours' | 'analytics' | 'ai'>('schedule');

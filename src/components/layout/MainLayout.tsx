@@ -1,6 +1,6 @@
 import React, { useState, Suspense } from 'react';
 import ErrorBoundary from '../common/ErrorBoundary';
-import { Staff, Tour } from '../../types';
+import { Staff, Tour } from '../../types/index';
 import Header from '../common/Header';
 import ScheduleView from '../views/ScheduleView';
 import StaffView from '../views/StaffView';
