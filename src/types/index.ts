@@ -1,11 +1,26 @@
 export interface Staff {
-  id: number;
+  id: string;
   name: string;
   role: string;
   email: string;
-  phone: string;
-  availability: string[];
-  skillLevel: 'Junior' | 'Mid' | 'Senior';
+  phone?: string;
+  availability: {
+    [key: string]: boolean; // key is day of week
+  };
+}
+
+export interface Tour {
+  id: string;
+  name: string;
+  description: string;
+  duration: number; // in minutes
+  maxParticipants: number;
+  price: number;
+  schedule: {
+    startTime: string;
+    endTime: string;
+    days: string[];
+  };
 }
 
 export interface Shift {
