@@ -544,7 +544,7 @@ const VaktAI: React.FC = () => {
                   <p className="text-xs text-green-600 mt-1">+2 frá síðustu viku</p>
                 </div>
                 <div className="p-4 bg-blue-100 rounded-full">
-                  <Icons.Users className="w-8 h-8 text-blue-600" />
+                  <Icons.User className="w-8 h-8 text-blue-600" />
                 </div>
               </div>
             </div>
@@ -570,7 +570,7 @@ const VaktAI: React.FC = () => {
                   <p className="text-xs text-orange-600 mt-1">⚠️ Þarf staðgengla</p>
                 </div>
                 <div className="p-4 bg-red-100 rounded-full">
-                  <Icons.AlertTriangle className="w-8 h-8 text-red-600" />
+                  <Icons.Alert className="w-8 h-8 text-red-600" />
                 </div>
               </div>
             </div>
@@ -583,7 +583,7 @@ const VaktAI: React.FC = () => {
                   <p className="text-xs text-purple-600 mt-1">↑ {analytics.efficiency - 90}% bæting</p>
                 </div>
                 <div className="p-4 bg-purple-100 rounded-full">
-                  <Icons.Zap className="w-8 h-8 text-purple-600" />
+                  <Icons.Star className="w-8 h-8 text-purple-600" />
                 </div>
               </div>
             </div>
