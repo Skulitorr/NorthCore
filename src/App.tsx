@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { Suspense } from 'react';
 import ErrorBoundary from './components/common/ErrorBoundary';
+import { safeImport } from './utils/safeImport';
 
 // Default fallback components
 const FallbackComponent = ({ name }: { name: string }) => (
@@ -8,47 +9,18 @@ const FallbackComponent = ({ name }: { name: string }) => (
   </div>
 );
 
+// Safe dynamic import for MainLayout
+const MainLayout = safeImport<React.ComponentType>(
+  () => import('./components/layout/MainLayout'),
+  { componentName: 'MainLayout' }
+);
+
 const App: React.FC = () => {
-  const [MainLayout, setMainLayout] = useState<React.ComponentType | null>(null);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const loadMainLayout = async () => {
-      try {
-        const module = await import('./components/layout/MainLayout');
-        setMainLayout(() => module.default);
-      } catch (err) {
-        console.error('Failed to load MainLayout:', err);
-        setError('Failed to load main application layout');
-      }
-    };
-
-    loadMainLayout();
-  }, []);
-
-  if (error) {
-    return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="text-center p-8 bg-white rounded-lg shadow-md">
-          <h1 className="text-2xl font-bold text-red-600 mb-4">Application Error</h1>
-          <p className="text-gray-600">{error}</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <ErrorBoundary fallback={<FallbackComponent name="App" />}>
-      {MainLayout ? (
+    <ErrorBoundary>
+      <Suspense fallback={<FallbackComponent name="MainLayout" />}>
         <MainLayout />
-      ) : (
-        <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-          <div className="text-center">
-            <h1 className="text-2xl font-bold text-gray-900 mb-4">VaktAI</h1>
-            <p className="text-gray-600">Loading application...</p>
-          </div>
-        </div>
-      )}
+      </Suspense>
     </ErrorBoundary>
   );
 };

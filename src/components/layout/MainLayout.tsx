@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import ErrorBoundary from '../common/ErrorBoundary';
 import { Staff, Tour } from '../../types';
+import { safeImport } from '../../utils/safeImport';
 
 // Default fallback components
 const FallbackComponent = ({ name }: { name: string }) => (
@@ -32,99 +33,98 @@ interface ToursViewProps {
   onToursChange: (tours: Tour[]) => void;
 }
 
-const MainLayout: React.FC = () => {
-  // Component states
-  const [Header, setHeader] = useState<React.ComponentType<HeaderProps> | null>(null);
-  const [ScheduleView, setScheduleView] = useState<React.ComponentType<ScheduleViewProps> | null>(null);
-  const [StaffView, setStaffView] = useState<React.ComponentType<StaffViewProps> | null>(null);
-  const [ToursView, setToursView] = useState<React.ComponentType<ToursViewProps> | null>(null);
-  const [AnalyticsView, setAnalyticsView] = useState<React.ComponentType | null>(null);
-  const [AIView, setAIView] = useState<React.ComponentType | null>(null);
+// Safe dynamic imports
+const Header = safeImport<React.ComponentType<HeaderProps>>(
+  () => import('../common/Header'),
+  { componentName: 'Header' }
+);
 
+const ScheduleView = safeImport<React.ComponentType<ScheduleViewProps>>(
+  () => import('../views/ScheduleView'),
+  { componentName: 'ScheduleView' }
+);
+
+const StaffView = safeImport<React.ComponentType<StaffViewProps>>(
+  () => import('../views/StaffView'),
+  { componentName: 'StaffView' }
+);
+
+const ToursView = safeImport<React.ComponentType<ToursViewProps>>(
+  () => import('../views/ToursView'),
+  { componentName: 'ToursView' }
+);
+
+const AnalyticsView = safeImport<React.ComponentType>(
+  () => import('../views/AnalyticsView'),
+  { componentName: 'AnalyticsView' }
+);
+
+const AIView = safeImport<React.ComponentType>(
+  () => import('../views/AIView'),
+  { componentName: 'AIView' }
+);
+
+const MainLayout: React.FC = () => {
   const [currentView, setCurrentView] = useState<'schedule' | 'staff' | 'tours' | 'analytics' | 'ai'>('schedule');
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [staff, setStaff] = useState<Staff[]>([]);
   const [tours, setTours] = useState<Tour[]>([]);
 
-  // Load components dynamically
-  useEffect(() => {
-    const loadComponents = async () => {
-      try {
-        const [
-          HeaderModule,
-          ScheduleViewModule,
-          StaffViewModule,
-          ToursViewModule,
-          AnalyticsViewModule,
-          AIViewModule
-        ] = await Promise.all([
-          import('../common/Header'),
-          import('../views/ScheduleView'),
-          import('../views/StaffView'),
-          import('../views/ToursView'),
-          import('../views/AnalyticsView'),
-          import('../views/AIView')
-        ]);
-
-        setHeader(() => HeaderModule.default);
-        setScheduleView(() => ScheduleViewModule.default);
-        setStaffView(() => StaffViewModule.default);
-        setToursView(() => ToursViewModule.default);
-        setAnalyticsView(() => AnalyticsViewModule.default);
-        setAIView(() => AIViewModule.default);
-      } catch (err) {
-        console.error('Failed to load components:', err);
-      }
-    };
-
-    loadComponents();
-  }, []);
-
   const renderView = () => {
     switch (currentView) {
       case 'schedule':
-        return ScheduleView ? (
+        return (
           <ErrorBoundary>
-            <ScheduleView 
-              date={currentDate}
-              onDateChange={setCurrentDate}
-              staff={staff}
-            />
+            <Suspense fallback={<FallbackComponent name="ScheduleView" />}>
+              <ScheduleView 
+                date={currentDate}
+                onDateChange={setCurrentDate}
+                staff={staff}
+              />
+            </Suspense>
           </ErrorBoundary>
-        ) : <FallbackComponent name="ScheduleView" />;
+        );
       
       case 'staff':
-        return StaffView ? (
+        return (
           <ErrorBoundary>
-            <StaffView 
-              staff={staff}
-              onStaffChange={setStaff}
-            />
+            <Suspense fallback={<FallbackComponent name="StaffView" />}>
+              <StaffView 
+                staff={staff}
+                onStaffChange={setStaff}
+              />
+            </Suspense>
           </ErrorBoundary>
-        ) : <FallbackComponent name="StaffView" />;
+        );
       
       case 'tours':
-        return ToursView ? (
+        return (
           <ErrorBoundary>
-            <ToursView 
-              onToursChange={setTours}
-            />
+            <Suspense fallback={<FallbackComponent name="ToursView" />}>
+              <ToursView 
+                onToursChange={setTours}
+              />
+            </Suspense>
           </ErrorBoundary>
-        ) : <FallbackComponent name="ToursView" />;
+        );
       
       case 'analytics':
-        return AnalyticsView ? (
+        return (
           <ErrorBoundary>
-            <AnalyticsView />
+            <Suspense fallback={<FallbackComponent name="AnalyticsView" />}>
+              <AnalyticsView />
+            </Suspense>
           </ErrorBoundary>
-        ) : <FallbackComponent name="AnalyticsView" />;
+        );
       
       case 'ai':
-        return AIView ? (
+        return (
           <ErrorBoundary>
-            <AIView />
+            <Suspense fallback={<FallbackComponent name="AIView" />}>
+              <AIView />
+            </Suspense>
           </ErrorBoundary>
-        ) : <FallbackComponent name="AIView" />;
+        );
       
       default:
         return <div>Select a view</div>;
@@ -134,16 +134,14 @@ const MainLayout: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
       <ErrorBoundary>
-        {Header ? (
+        <Suspense fallback={<FallbackComponent name="Header" />}>
           <Header 
             user={null}
             notificationsCount={0}
             onNotificationsClick={() => {}}
             onSettingsClick={() => {}}
           />
-        ) : (
-          <FallbackComponent name="Header" />
-        )}
+        </Suspense>
       </ErrorBoundary>
 
       <div className="container mx-auto px-4 py-8">
